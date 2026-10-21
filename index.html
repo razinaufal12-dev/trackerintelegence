@@ -3,220 +3,161 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Parameter Berpikir</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<title>Dashboard Fondasi Berpikir</title>
 <style>
-:root{--paper:#e8eaeb;--ink:#101214;--soft:#5d6468;--fill:#101214;--seal:#c8262b;--card:#f3f4f4;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15171a;--ink:#eceeef;--soft:#9aa1a6;--fill:#eceeef;--seal:#ec4a4f;--card:#1d2024;color-scheme:dark}}
-:root[data-theme="dark"]{--paper:#15171a;--ink:#eceeef;--soft:#9aa1a6;--fill:#eceeef;--seal:#ec4a4f;--card:#1d2024;color-scheme:dark}
+:root{--paper:#e8eaeb;--ink:#101214;--soft:#5d6468;--card:#f3f4f4;--seal:#c8262b;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--paper:#15171a;--ink:#eceeef;--soft:#9aa1a6;--card:#1d2024;--seal:#ec4a4f;color-scheme:dark}}
 *{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New","Segoe UI",system-ui,sans-serif;line-height:1.5}
-main{max-width:1020px;margin:0 auto;padding:28px 18px 48px}
-header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;border-bottom:4px solid var(--ink);padding-bottom:10px}
-h1{font-family:"Dela Gothic One",Impact,sans-serif;font-weight:400;font-size:clamp(26px,5.5vw,46px);line-height:1.05;margin:0}
-h1 small{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700;font-size:clamp(12px,2.4vw,15px);color:var(--soft);margin-bottom:6px}
-.sub{font-weight:700;font-size:14px;color:var(--soft);text-align:right}
-.stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:26px;margin-top:22px;align-items:start}
-@media (max-width:780px){.stage{grid-template-columns:1fr}}
-.chart{position:relative;position:sticky;top:12px}
-@media (max-width:780px){.chart{position:relative;top:0}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.5}
+main{max-width:1000px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0 0 4px;font-size:clamp(24px,5vw,38px);font-weight:900;letter-spacing:-.01em}
+.sub{color:var(--soft);font-size:14px;margin:0 0 16px}
+header{border-bottom:4px solid var(--ink);padding-bottom:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 6px}
+input{flex:1 1 280px;font:inherit;padding:9px 10px;background:var(--card);color:var(--ink);border:3px solid var(--ink)}
+input.s{flex:0 1 190px}
+button{font:inherit;font-weight:800;background:var(--ink);color:var(--paper);border:0;padding:9px 16px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--seal);outline-offset:2px}
+#st{font-size:14px;font-weight:700;min-height:22px;margin:4px 0 0}
+#st.err{color:var(--seal)}
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;margin-top:18px;align-items:start}
+@media (max-width:780px){.grid{grid-template-columns:1fr}}
 svg{width:100%;height:auto;display:block;overflow:visible}
-.ring{fill:none;stroke:var(--ink);stroke-width:1}.ring.outer{stroke-width:3.2}
-.axis,.tick{stroke:var(--ink);stroke-width:1.2}
-.shape{stroke:var(--ink);stroke-width:4;stroke-linejoin:miter;fill:none}
-.lab{font-family:"Dela Gothic One",sans-serif;font-size:15px;fill:var(--ink);text-anchor:middle}
-.kan{font-weight:900;font-size:12px;fill:var(--soft);text-anchor:middle}
-.num{font-family:"Dela Gothic One",sans-serif;font-size:22px;fill:var(--ink);text-anchor:middle}
-.dot{fill:var(--paper);stroke:var(--ink);stroke-width:3.5}
-.seal{position:absolute;right:0;top:0;width:92px;height:92px;transform:rotate(-8deg);border:5px solid var(--seal);border-radius:10px;color:var(--seal);display:grid;place-items:center;text-align:center;line-height:1}
-.seal b{font-family:"Dela Gothic One",sans-serif;font-weight:400;font-size:52px;display:block}
-.seal span{font-size:11px;font-weight:900;display:block;margin-top:-4px}
-.panel{background:var(--card);border:3px solid var(--ink)}
-details{border-bottom:1.5px dashed var(--soft)}details:last-child{border-bottom:0}
-summary{cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:12px 14px;list-style:none}
-summary::-webkit-details-marker{display:none}
-summary:focus-visible{outline:3px solid var(--seal);outline-offset:-3px}
-.name{font-family:"Dela Gothic One",sans-serif;font-size:17px}
-.name i{font-style:normal;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:12px;color:var(--soft);margin-left:8px}
-.avg{font-family:"Dela Gothic One",sans-serif;font-size:20px}
-.items{padding:0 14px 12px}
-.d{font-size:13px;color:var(--soft);margin:0 0 6px}
-.it{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;font-size:14.5px;font-weight:500}
-select{font:inherit;font-size:13px;font-weight:700;background:var(--paper);color:var(--ink);border:2px solid var(--ink);padding:4px 6px;min-width:128px}
-select:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid var(--seal);outline-offset:2px}
-.legend{font-size:12.5px;color:var(--soft);margin:10px 0 0}
-.foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:16px;font-weight:700;font-size:14px}
-.btns{display:flex;gap:8px;flex-wrap:wrap}
-button{font:inherit;font-weight:900;background:var(--ink);color:var(--paper);border:0;padding:9px 16px;cursor:pointer}
-button.alt{background:transparent;color:var(--ink);border:3px solid var(--ink);padding:6px 14px}
-.verdict{margin-top:18px;border-top:4px solid var(--ink);padding-top:12px;font-size:15px;max-width:72ch}
-.verdict strong{font-family:"Dela Gothic One",sans-serif;font-weight:400}
-.io{margin-top:18px;border:3px solid var(--ink);background:var(--card);padding:12px 14px}
-.io summary{padding:0;font-weight:900}
-.io p{font-size:13.5px;color:var(--soft);max-width:75ch}
-textarea{width:100%;min-height:120px;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--paper);color:var(--ink);border:2px solid var(--ink);padding:8px}
-.msg{font-size:13.5px;font-weight:700;margin-left:6px}
+.ring{fill:none;stroke:var(--ink);stroke-width:1}.ring.o{stroke-width:3}
+.ax{stroke:var(--ink);stroke-width:1.2}
+.sh{fill:var(--ink);fill-opacity:.22;stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
+.lb{font-weight:800;font-size:14px;fill:var(--ink);text-anchor:middle}
+.nm{font-weight:900;font-size:20px;fill:var(--ink);text-anchor:middle}
+.dt{fill:var(--paper);stroke:var(--ink);stroke-width:3.5}
+.tbl{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink);font-size:14px}
+th,td{padding:7px 8px;text-align:center;border-bottom:1.5px dashed var(--soft)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;background:var(--ink);color:var(--paper)}
+td:first-child,th:first-child{text-align:left}
+tr.g td{font-weight:900;background:var(--paper);text-align:left;font-size:12px;letter-spacing:.06em}
+.help{margin-top:22px;border:3px solid var(--ink);background:var(--card);padding:10px 14px;font-size:14px}
+.help summary{cursor:pointer;font-weight:900}
+.help li{margin:4px 0}
+code{background:var(--paper);padding:1px 5px}
 </style>
 </head>
 <body>
 <main>
   <header>
-    <h1><small>Peta pengetahuan dasar</small>Parameter Berpikir</h1>
-    <div class="sub">Skala 0 sampai 5</div>
+    <h1>Dashboard Fondasi Berpikir</h1>
+    <p class="sub">Membaca langsung dari Google Sheet tracker THINK dan COMMUNICATE.</p>
   </header>
 
-  <div class="stage">
-    <div class="chart">
-      <svg id="svg" viewBox="0 0 760 640" role="img" aria-label="Diagram radar delapan sumbu: empat berpikir, empat komunikasi">
-        <defs><pattern id="ht" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="4.5" cy="4.5" r="2.4" fill="var(--fill)"/></pattern></defs>
-        <g id="grid"></g>
-        <polygon id="shapeDots" fill="url(#ht)" opacity=".85"/>
-        <polygon id="shape" class="shape"/>
-        <g id="dots"></g><g id="labels"></g>
-      </svg>
-      <div class="seal" aria-live="polite"><div><b id="rank">D</b><span>PERINGKAT</span></div></div>
-    </div>
-    <div>
-      <div class="panel" id="panel"></div>
-      <p class="legend">Isi tingkat tiap topik: 0 Belum, 1 Kenal, 2 Paham, 3 Bisa jelaskan, 4 Terbiasa, 5 Mahir. Nilai sumbu adalah rata-rata topiknya.</p>
-    </div>
+  <div class="bar">
+    <input id="link" placeholder="Tempel link atau ID Google Sheet" aria-label="Link atau ID Google Sheet">
+    <input id="tab" class="s" value="Ringkasan" aria-label="Nama tab ringkasan">
+    <button id="go" type="button">Hubungkan</button>
+  </div>
+  <p id="st" role="status">Belum terhubung.</p>
+
+  <div class="grid">
+    <svg id="svg" viewBox="0 0 760 640" role="img" aria-label="Radar skor per sumbu"></svg>
+    <table class="tbl" id="tbl"><thead><tr><th>Sumbu</th><th>Pre</th><th>Post</th><th>H+7</th><th>Skor</th></tr></thead><tbody></tbody></table>
   </div>
 
-  <div class="foot">
-    <div>Total <span id="total">0</span> dari 40<span class="msg" id="msg"></span></div>
-    <div class="btns"><button class="alt" id="demo" type="button">Isi contoh</button><button class="alt" id="clear" type="button">Kosongkan</button></div>
-  </div>
-  <p class="verdict" id="verdict"></p>
-
-  <details class="io" id="io">
-    <summary>Impor atau ekspor dari Excel / Google Sheets</summary>
-    <p>Format tiga kolom: Sumbu, Topik, Level (0 sampai 5). Salin langsung dari sel Excel atau Sheets lalu tempel di bawah, atau pakai Ekspor untuk membuat tabel dari data sekarang. Topik baru ditambahkan ke sumbu yang namanya cocok.</p>
-    <textarea id="csv" aria-label="Data CSV" placeholder="Sumbu,Topik,Level&#10;Logika &amp; kritis,Bias kognitif,3"></textarea>
-    <div class="btns" style="margin-top:8px"><button id="imp" type="button">Impor</button><button class="alt" id="exp" type="button">Ekspor</button><button class="alt" id="cp" type="button">Salin</button></div>
+  <details class="help">
+    <summary>Cara menghubungkan</summary>
+    <ol>
+      <li>Unggah file Excel ke Google Drive, buka dengan Google Sheets, lalu pilih <b>File → Simpan sebagai Google Spreadsheet</b>. File .xlsx biasa tidak bisa dibaca.</li>
+      <li>Klik <b>Bagikan</b>, ubah akses umum menjadi <b>Siapa saja yang memiliki link: Pelihat</b>.</li>
+      <li>Tempel link Sheet di kolom atas dan klik Hubungkan. Nama tab harus sama dengan tab ringkasan di Sheet (bawaan: <code>Ringkasan</code>).</li>
+      <li>Halaman ini hanya <b>membaca</b>. Mengisi data tetap dilakukan di Google Sheets, dan tampilan diperbarui otomatis tiap 60 detik.</li>
+    </ol>
   </details>
 </main>
 
 <script>
 (function(){
-  var AX=[
-    ["THINK","Logika & kritis","Menilai argumen, mengenali kesalahan nalar dan bias.",["Premis dan kesimpulan","Valid vs benar","Kesalahan nalar umum","Bias kognitif","Korelasi vs sebab-akibat"]],
-    ["THINK","Problem solving","Merumuskan dan memecah masalah, mencari banyak opsi.",["Merumuskan masalah","Memecah masalah","First principles","5 Whys","Brainstorming dan inversi"]],
-    ["THINK","Systems thinking","Hubungan sebab-akibat dan efek jangka panjang.",["Peta sebab-akibat","Feedback loop","Efek lanjutan","Batas sistem","Titik pengungkit"]],
-    ["THINK","Decision making","Memilih berdasarkan trade-off, kriteria, dan risiko.",["Kriteria dan bobot","Trade-off dan biaya peluang","Probabilitas dan risiko","Pre-mortem","Keputusan bisa dibatalkan atau tidak"]],
-    ["COMMUNICATE","Bahasa Indonesia","Membaca, menulis, dan berbicara dengan jelas dan tepat.",["Ejaan dan tata bahasa","Kosakata","Struktur paragraf","Menulis ringkas","Berbicara terstruktur"]],
-    ["COMMUNICATE","Bahasa Inggris","Membaca, menulis, dan berbicara untuk kerja dan belajar.",["Grammar dasar","Kosakata","Reading","Writing","Speaking dan listening"]],
-    ["COMMUNICATE","Memahami argumen","Verbal reasoning: apa yang diklaim dan atas dasar apa.",["Klaim utama","Alasan dan bukti","Asumsi tersembunyi","Fakta vs opini","Menilai kredibilitas sumber"]],
-    ["COMMUNICATE","Mendengar & empati","Menangkap maksud orang lain dan sudut pandangnya.",["Mendengar aktif","Bertanya klarifikasi","Membaca nada dan maksud","Memahami sudut pandang lawan","Memberi umpan balik"]]
-  ];
-  var LV=["0 Belum","1 Kenal","2 Paham","3 Bisa jelaskan","4 Terbiasa","5 Mahir"];
-  var NS="http://www.w3.org/2000/svg",CX=380,CY=320,R=190,N=AX.length,KEY="fondasi-berpikir-v1";
-  var ST={};
-  try{ST=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){ST={}}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
+  var AX=["Logika & Kritis","Problem Solving","Systems Thinking","Decision Making","Bahasa Indonesia","Bahasa Inggris","Memahami Argumen","Mendengar & Empati"];
+  var GRP=["THINK","THINK","THINK","THINK","COMMUNICATE","COMMUNICATE","COMMUNICATE","COMMUNICATE"];
+  var NS="http://www.w3.org/2000/svg",CX=380,CY=320,R=190,N=8,KEY="dash-fondasi-v1",timer=null;
+  function $(i){return document.getElementById(i)}
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
   function ang(i){return -Math.PI/2+i*2*Math.PI/N}
   function pt(i,r){return [CX+r*Math.cos(ang(i)),CY+r*Math.sin(ang(i))]}
-  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
-  function $(id){return document.getElementById(id)}
-  function items(i){
-    var base=AX[i][3].slice(), pre=AX[i][1]+"|";
-    Object.keys(ST).forEach(function(k){if(k.indexOf(pre)===0){var t=k.slice(pre.length);if(base.indexOf(t)<0)base.push(t)}});
-    return base;
-  }
-  function avg(i){var it=items(i),s=0;it.forEach(function(t){s+=+ST[AX[i][1]+"|"+t]||0});return s/it.length}
 
-  var grid=$("grid");
-  for(var L=1;L<=5;L++)el("polygon",{points:AX.map(function(_,i){return pt(i,R*L/5).join(",")}).join(" "),"class":"ring"+(L===5?" outer":"")},grid);
-  AX.forEach(function(_,i){
-    var p=pt(i,R);el("line",{x1:CX,y1:CY,x2:p[0],y2:p[1],"class":"axis"},grid);
-    for(var L=1;L<=5;L++){var c=pt(i,R*L/5),a=ang(i)+Math.PI/2;el("line",{x1:c[0]-Math.cos(a)*7,y1:c[1]-Math.sin(a)*7,x2:c[0]+Math.cos(a)*7,y2:c[1]+Math.sin(a)*7,"class":"tick"},grid)}
-  });
-  var numEls=[],dotEls=[];
+  var svg=$("svg"),shape=null,dots=[],nums=[];
+  for(var L=1;L<=5;L++)el("polygon",{points:AX.map(function(_,i){return pt(i,R*L/5).join(",")}).join(" "),"class":"ring"+(L===5?" o":"")},svg);
+  AX.forEach(function(a,i){var p=pt(i,R);el("line",{x1:CX,y1:CY,x2:p[0],y2:p[1],"class":"ax"},svg)});
+  shape=el("polygon",{"class":"sh",points:AX.map(function(){return CX+","+CY}).join(" ")},svg);
   AX.forEach(function(a,i){
     var p=pt(i,R+46);
-    el("text",{x:p[0],y:p[1]-8,"class":"lab"},$("labels")).textContent=a[1];
-    el("text",{x:p[0],y:p[1]+8,"class":"kan"},$("labels")).textContent=a[0];
-    numEls.push(el("text",{x:p[0],y:p[1]+32,"class":"num"},$("labels")));
-    dotEls.push(el("circle",{r:7,"class":"dot"},$("dots")));
+    el("text",{x:p[0],y:p[1]-8,"class":"lb"},svg).textContent=a;
+    nums.push(el("text",{x:p[0],y:p[1]+16,"class":"nm"},svg));
+    dots.push(el("circle",{r:7,cx:CX,cy:CY,"class":"dt"},svg));
   });
 
-  var avgEls=[];
-  function buildPanel(){
-    var open={};Array.prototype.forEach.call(document.querySelectorAll("#panel details"),function(d,i){open[i]=d.open});
-    var P=$("panel");P.innerHTML="";avgEls=[];
+  function num(s){
+    if(s==null)return null;s=String(s).replace(/[%\s]/g,"");if(s==="")return null;
+    if(s.indexOf(",")>=0&&s.indexOf(".")>=0)s=s.replace(/\./g,"").replace(",",".");
+    else if(s.indexOf(",")>=0)s=s.replace(",",".");
+    var v=parseFloat(s);return isNaN(v)?null:v;
+  }
+  function parseCSV(t){
+    var rows=[],row=[],cur="",q=false;
+    for(var i=0;i<t.length;i++){var c=t[i];
+      if(q){if(c==='"'){if(t[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}
+      else if(c==='"')q=true;
+      else if(c===","){row.push(cur);cur=""}
+      else if(c==="\n"){row.push(cur);rows.push(row);row=[];cur=""}
+      else if(c!=="\r")cur+=c;
+    }
+    row.push(cur);rows.push(row);return rows;
+  }
+  function status(t,err){var s=$("st");s.textContent=t;s.className=err?"err":""}
+  function sheetId(v){var m=/\/d\/([a-zA-Z0-9_-]+)/.exec(v);return m?m[1]:v.trim()}
+
+  function render(data){
+    var pts=[];
+    var tb=document.querySelector("#tbl tbody");tb.innerHTML="";
+    var last="";
     AX.forEach(function(a,i){
-      var d=document.createElement("details");if(open[i])d.open=true;
-      var s=document.createElement("summary");
-      s.innerHTML='<span class="name">'+a[1]+'<i>'+a[0]+'</i></span><span class="avg"></span>';
-      avgEls.push(s.querySelector(".avg"));d.appendChild(s);
-      var w=document.createElement("div");w.className="items";
-      w.innerHTML='<p class="d">'+a[2]+'</p>';
-      items(i).forEach(function(t){
-        var r=document.createElement("div");r.className="it";
-        var l=document.createElement("span");l.textContent=t;
-        var sel=document.createElement("select");sel.setAttribute("aria-label",a[1]+": "+t);
-        LV.forEach(function(x,n){var o=document.createElement("option");o.value=n;o.textContent=x;sel.appendChild(o)});
-        sel.value=+ST[a[1]+"|"+t]||0;
-        sel.addEventListener("change",function(){ST[a[1]+"|"+t]=+sel.value;save();draw()});
-        r.appendChild(l);r.appendChild(sel);w.appendChild(r);
+      var d=data[a]||{},v=d.skor==null?0:Math.max(0,Math.min(100,d.skor));
+      var p=pt(i,R*v/100);pts.push(p.join(","));
+      dots[i].setAttribute("cx",p[0]);dots[i].setAttribute("cy",p[1]);
+      nums[i].textContent=d.skor==null?"-":Math.round(v);
+      if(GRP[i]!==last){var g=document.createElement("tr");g.className="g";g.innerHTML='<td colspan="5">'+GRP[i]+'</td>';tb.appendChild(g);last=GRP[i]}
+      var r=document.createElement("tr"),f=function(x){return x==null?"-":Math.round(x*10)/10};
+      r.innerHTML="<td>"+a.replace("&","&amp;")+"</td><td>"+f(d.pre)+"</td><td>"+f(d.post)+"</td><td>"+f(d.h7)+"</td><td><b>"+f(d.skor)+"</b></td>";
+      tb.appendChild(r);
+    });
+    shape.setAttribute("points",pts.join(" "));
+  }
+
+  function load(){
+    var id=sheetId($("link").value),tab=$("tab").value.trim()||"Ringkasan";
+    if(!id){status("Isi link atau ID Google Sheet dulu.",true);return}
+    try{localStorage.setItem(KEY,JSON.stringify({id:id,tab:tab}))}catch(e){}
+    status("Membaca data...");
+    var url="https://docs.google.com/spreadsheets/d/"+id+"/gviz/tq?tqx=out:csv&sheet="+encodeURIComponent(tab);
+    fetch(url).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.text()}).then(function(t){
+      if(/^\s*<(!doctype|html)/i.test(t))throw new Error("login");
+      var rows=parseCSV(t),data={},found=0;
+      rows.forEach(function(r){
+        var name=(r[1]||"").trim();
+        AX.forEach(function(a){
+          if(a.toLowerCase()===name.toLowerCase()){found++;data[a]={pre:num(r[2]),post:num(r[3]),h7:num(r[4]),skor:num(r[8])}}
+        });
       });
-      d.appendChild(w);P.appendChild(d);
+      if(!found)throw new Error("kosong");
+      render(data);
+      status("Terhubung. Diperbarui "+new Date().toLocaleTimeString("id-ID")+" (".concat(found," sumbu terbaca)."));
+      clearInterval(timer);timer=setInterval(load,60000);
+    }).catch(function(e){
+      clearInterval(timer);
+      status(e.message==="kosong"
+        ?"Tab terbaca tapi nama sumbu tidak ditemukan. Cek nama tab dan pastikan kolom B berisi nama sumbu."
+        :"Tidak bisa membaca Sheet. Pastikan berupa Google Spreadsheet asli (bukan .xlsx) dan aksesnya Siapa saja yang memiliki link: Pelihat.",true);
     });
   }
-  function rank(t){return t>=35?"S":t>=29?"A":t>=22?"B":t>=16?"C":"D"}
-  function draw(){
-    var v=AX.map(function(_,i){return avg(i)});
-    var pts=v.map(function(x,i){return pt(i,R*x/5).join(",")}).join(" ");
-    $("shapeDots").setAttribute("points",pts);$("shape").setAttribute("points",pts);
-    v.forEach(function(x,i){
-      var p=pt(i,R*x/5);dotEls[i].setAttribute("cx",p[0]);dotEls[i].setAttribute("cy",p[1]);
-      numEls[i].textContent=x.toFixed(1);avgEls[i].textContent=x.toFixed(1);
-    });
-    var t=v.reduce(function(a,b){return a+b},0);
-    $("total").textContent=t.toFixed(1);$("rank").textContent=rank(t);
-    var hi=v.indexOf(Math.max.apply(null,v)),lo=v.indexOf(Math.min.apply(null,v));
-    $("verdict").innerHTML=t===0?"<strong>Belum ada data.</strong> Buka satu sumbu di kanan dan isi tingkat tiap topik, atau impor dari Excel di bagian bawah."
-      :(v[hi]===v[lo]?"<strong>Seimbang.</strong> Semua sumbu di tingkat yang sama. Pilih satu untuk dinaikkan lebih dulu."
-      :"<strong>Terkuat: "+AX[hi][1]+".</strong> <strong>Terlemah: "+AX[lo][1]+".</strong> Naikkan "+AX[lo][1]+" lebih dulu, karena satu sisi yang pendek menarik keseluruhan.");
-  }
-  function say(t){$("msg").textContent=t}
-  function toCSV(){
-    var rows=["Sumbu,Topik,Level"];
-    AX.forEach(function(a,i){items(i).forEach(function(t){rows.push([a[1],t,+ST[a[1]+"|"+t]||0].map(function(c){c=String(c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(","))})});
-    return rows.join("\n");
-  }
-  function cells(line){
-    if(line.indexOf("\t")>=0)return line.split("\t").map(function(c){return c.trim()});
-    var out=[],cur="",q=false;
-    for(var i=0;i<line.length;i++){var c=line[i];
-      if(q){if(c==='"'){if(line[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}
-      else if(c==='"')q=true;else if(c===","){out.push(cur.trim());cur=""}else cur+=c}
-    out.push(cur.trim());return out;
-  }
-  $("exp").addEventListener("click",function(){$("csv").value=toCSV();say("Data diekspor ke kotak teks.")});
-  $("cp").addEventListener("click",function(){
-    var ta=$("csv");if(!ta.value)ta.value=toCSV();ta.select();
-    var ok=false;try{ok=document.execCommand("copy")}catch(e){}
-    say(ok?"Tersalin.":"Teks sudah terpilih, tekan Ctrl+C.");
-  });
-  $("imp").addEventListener("click",function(){
-    var n=0,skip=0;
-    $("csv").value.split(/\r?\n/).forEach(function(line){
-      if(!line.trim())return;var c=cells(line);
-      if(c.length<3||isNaN(parseFloat(c[2]))){skip++;return}
-      var ai=-1;AX.forEach(function(a,i){if(a[1].toLowerCase()===c[0].toLowerCase())ai=i});
-      if(ai<0||!c[1]){skip++;return}
-      ST[AX[ai][1]+"|"+c[1]]=Math.max(0,Math.min(5,Math.round(parseFloat(c[2]))));n++;
-    });
-    save();buildPanel();draw();say(n+" baris masuk"+(skip?", "+skip+" dilewati (header atau nama sumbu tidak cocok).":"."));
-  });
-  $("clear").addEventListener("click",function(){ST={};save();buildPanel();draw();say("Data dikosongkan.")});
-  $("demo").addEventListener("click",function(){
-    ST={};var seed=[3,2,1,2,4,2,3,2];
-    AX.forEach(function(a,i){a[3].forEach(function(t,j){ST[a[1]+"|"+t]=Math.max(0,Math.min(5,seed[i]+((j+i)%3)-1))})});
-    save();buildPanel();draw();say("Contoh diisi, silakan ubah.");
-  });
-  buildPanel();draw();
+  $("go").addEventListener("click",load);
+  $("link").addEventListener("keydown",function(e){if(e.key==="Enter")load()});
+  try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s){$("link").value=s.id;$("tab").value=s.tab;load()}}catch(e){}
+  render({});
 })();
 </script>
 </body>
